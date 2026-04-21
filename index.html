@@ -1,0 +1,1939 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CRITISS — Centro di Ricerca "Teorie dell'Ideologia, del Soggetto e della Subalternità" · Università di Sassari</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,700;0,9..144,900;1,9..144,400;1,9..144,700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0a0a0a;
+    --paper: #f2ede4;
+    --paper-hot: #ebe4d6;
+    --accent: #c73a2c;
+    --muted: #5a5550;
+    --line: #0a0a0a;
+    --grain-opacity: 0.035;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 14px;
+    line-height: 1.55;
+    overflow-x: hidden;
+    min-height: 100vh;
+    position: relative;
+  }
+
+  /* Grainy paper texture overlay */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 100;
+    opacity: var(--grain-opacity);
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/></svg>");
+    mix-blend-mode: multiply;
+  }
+
+  /* Typography */
+  h1, h2, h3, h4 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    line-height: 0.95;
+  }
+
+  .mono { font-family: 'JetBrains Mono', monospace; }
+  .caps { text-transform: uppercase; letter-spacing: 0.12em; font-size: 0.72rem; }
+
+  /* Top strip */
+  .topstrip {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 8px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border-bottom: 1px solid #333;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+  .topstrip .left span { margin-right: 20px; opacity: 0.7; }
+  .topstrip .left span.live { opacity: 1; color: #ffd9a8; }
+  .topstrip .live::before {
+    content: "●";
+    color: var(--accent);
+    margin-right: 6px;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse { 50% { opacity: 0.3; } }
+  .topstrip .right a {
+    color: var(--paper);
+    opacity: 0.7;
+    text-decoration: none;
+    margin-left: 20px;
+    transition: opacity 0.2s;
+  }
+  .topstrip .right a:hover { opacity: 1; }
+
+  /* Header — quieter, more elegant */
+  header.masthead {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 44px 48px 48px;
+    position: relative;
+  }
+
+  .masthead-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1600px;
+    margin: 0 auto;
+    gap: 40px;
+  }
+
+  .logo-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .logo-img {
+    display: block;
+    height: 72px;
+    width: auto;
+    max-width: 100%;
+  }
+
+  .masthead-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    opacity: 0.55;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .masthead-meta .sep { opacity: 0.5; }
+
+  /* Nav */
+  nav.primary {
+    background: var(--paper);
+    border-bottom: 1px solid var(--ink);
+    padding: 0 32px;
+    position: sticky;
+    top: 31px;
+    z-index: 40;
+  }
+
+  nav.primary ul {
+    list-style: none;
+    display: flex;
+    max-width: 1600px;
+    margin: 0 auto;
+    overflow-x: auto;
+  }
+
+  nav.primary li {
+    border-right: 1px solid var(--ink);
+  }
+  nav.primary li:first-child { border-left: 1px solid var(--ink); }
+
+  nav.primary a {
+    display: block;
+    padding: 18px 26px;
+    color: var(--ink);
+    text-decoration: none;
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 13px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-weight: 400;
+    font-variation-settings: "opsz" 14;
+    transition: all 0.25s ease;
+    white-space: nowrap;
+  }
+
+  nav.primary a:hover {
+    background: var(--ink);
+    color: var(--paper);
+    font-style: italic;
+  }
+
+  nav.primary a .num {
+    font-size: 10px;
+    opacity: 0.35;
+    margin-right: 12px;
+    display: inline-block;
+    min-width: 18px;
+    font-style: italic;
+    font-weight: 300;
+    letter-spacing: 0;
+  }
+
+  /* ── HERO ───────────────────────────────── */
+  .hero {
+    padding: 80px 32px 120px;
+    max-width: 1600px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: end;
+  }
+
+  .hero-kicker {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    margin-bottom: 32px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .hero-kicker::before {
+    content: "";
+    width: 40px;
+    height: 1px;
+    background: var(--ink);
+  }
+
+  .hero h1 {
+    font-size: clamp(48px, 7vw, 104px);
+    line-height: 0.92;
+    font-weight: 300;
+    letter-spacing: -0.035em;
+    margin-bottom: 48px;
+  }
+  .hero h1 em {
+    font-style: italic;
+    font-weight: 400;
+  }
+  .hero h1 .red {
+    color: var(--accent);
+    font-style: italic;
+    font-weight: 500;
+  }
+
+  .hero-lede {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    line-height: 1.4;
+    font-weight: 300;
+    max-width: 44ch;
+    color: var(--ink);
+    border-left: 1px solid var(--ink);
+    padding-left: 24px;
+    margin-left: 0;
+  }
+  .hero-lede::first-letter {
+    font-size: 3.2em;
+    float: left;
+    line-height: 0.85;
+    font-weight: 500;
+    padding-right: 8px;
+    padding-top: 6px;
+  }
+
+  .hero-meta {
+    margin-top: 40px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    padding-top: 24px;
+    border-top: 1px solid var(--ink);
+  }
+  .hero-meta div span.caps {
+    display: block;
+    margin-bottom: 6px;
+    opacity: 0.6;
+  }
+  .hero-meta div strong {
+    font-family: 'Fraunces', serif;
+    font-size: 18px;
+    font-weight: 500;
+  }
+
+  /* Wave divider */
+  .wave-divider {
+    width: 100%;
+    height: 80px;
+    display: block;
+  }
+  .wave-divider path {
+    stroke: var(--ink);
+    stroke-width: 1.5;
+    fill: none;
+  }
+
+  /* ── SECTIONS ───────────────────────────── */
+  section {
+    padding: 100px 32px;
+    max-width: 1600px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .section-header {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 40px;
+    margin-bottom: 60px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--ink);
+    align-items: end;
+  }
+
+  .section-number {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    font-style: italic;
+    font-weight: 300;
+    letter-spacing: -0.005em;
+    opacity: 0.7;
+  }
+  .section-number em {
+    font-style: italic;
+  }
+
+  .section-title {
+    font-size: clamp(36px, 4vw, 56px);
+    font-weight: 400;
+    letter-spacing: -0.025em;
+  }
+  .section-title em { font-style: italic; font-weight: 300; }
+
+  /* Manifesto */
+  #manifesto {
+    background: var(--ink);
+    color: var(--paper);
+    max-width: 100%;
+    padding: 100px 32px;
+  }
+  #manifesto .manifesto-inner {
+    max-width: 1600px;
+    margin: 0 auto;
+  }
+  #manifesto .section-header { border-bottom-color: var(--paper); }
+  #manifesto .section-title { color: var(--paper); }
+
+  .manifesto-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    margin-top: 20px;
+  }
+
+  .manifesto-col p {
+    font-family: 'Fraunces', serif;
+    font-size: 20px;
+    line-height: 1.55;
+    font-weight: 300;
+    margin-bottom: 24px;
+  }
+  .manifesto-col p.tesi {
+    font-style: italic;
+    color: var(--paper);
+    font-size: 26px;
+    line-height: 1.35;
+    margin-bottom: 32px;
+    border-left: 1px solid var(--paper);
+    padding-left: 20px;
+    opacity: 0.96;
+  }
+  .manifesto-col .marker {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--paper);
+    opacity: 0.5;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  /* Lines of research */
+  .lines-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0;
+    border-top: 1px solid var(--ink);
+    border-left: 1px solid var(--ink);
+  }
+
+  .line {
+    padding: 40px 32px 48px;
+    border-right: 1px solid var(--ink);
+    border-bottom: 1px solid var(--ink);
+    cursor: pointer;
+    transition: background 0.3s;
+    position: relative;
+    overflow: hidden;
+    min-height: 380px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .line:hover {
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .line:hover .line-wave path { stroke: var(--paper); }
+  .line:hover .line-num { color: var(--accent); }
+
+  .line-top .line-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    font-weight: 700;
+    margin-bottom: 24px;
+    display: block;
+  }
+  .line h3 {
+    font-size: 32px;
+    font-weight: 400;
+    line-height: 1;
+    margin-bottom: 20px;
+    font-style: italic;
+  }
+  .line p {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    line-height: 1.6;
+    opacity: 0.85;
+    max-width: 34ch;
+  }
+  .line-wave {
+    width: 100%;
+    height: 40px;
+    margin-top: 32px;
+  }
+  .line-wave path {
+    stroke: var(--ink);
+    stroke-width: 1.2;
+    fill: none;
+    transition: stroke 0.3s;
+  }
+
+  /* Members */
+  .members-list {
+    display: grid;
+    grid-template-columns: 60px 1.4fr 1fr 80px;
+    gap: 0;
+    align-items: stretch;
+  }
+  .members-header {
+    display: contents;
+  }
+  .members-header > div {
+    padding: 12px 16px;
+    border-bottom: 2px solid var(--ink);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-weight: 700;
+  }
+  .member {
+    display: contents;
+    cursor: pointer;
+  }
+  .member > div {
+    padding: 22px 16px;
+    border-bottom: 1px solid rgba(10,10,10,0.15);
+    transition: background 0.2s;
+  }
+  .member:hover > div {
+    background: var(--paper-hot);
+  }
+  .member .m-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    opacity: 0.4;
+  }
+  .member .m-name {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+  }
+  .member .m-name em { font-style: italic; opacity: 0.55; font-size: 0.58em; display: block; letter-spacing: 0.06em; margin-top: 6px; text-transform: uppercase; font-family: 'JetBrains Mono', monospace; }
+  .member .m-role, .member .m-field {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    line-height: 1.5;
+  }
+  .member .m-arrow {
+    text-align: right;
+    font-family: 'Fraunces', serif;
+    font-size: 24px;
+    transition: transform 0.25s;
+  }
+  .member:hover .m-arrow {
+    transform: translateX(6px);
+  }
+
+  /* Publications */
+  .pubs-wrap { position: relative; }
+  .pubs-intro {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    font-weight: 300;
+    line-height: 1.5;
+    max-width: 56ch;
+    margin-bottom: 48px;
+  }
+  .pubs-intro em { color: var(--accent); font-style: italic; }
+
+  .events-intro {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    font-weight: 300;
+    line-height: 1.55;
+    max-width: 64ch;
+    margin: 0 auto 56px;
+    text-align: center;
+  }
+  .events-intro em { color: var(--accent); font-style: italic; }
+
+  .pubs {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+  .pub {
+    border: 1px solid var(--ink);
+    padding: 0;
+    position: relative;
+    background: var(--paper);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .pub:hover {
+    transform: translate(-4px, -4px);
+    box-shadow: 6px 6px 0 var(--ink);
+  }
+  .pub-cover {
+    aspect-ratio: 3/4;
+    border-bottom: 1px solid var(--ink);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    padding: 18px;
+    justify-content: space-between;
+  }
+  .pub-cover.c1 { background: var(--ink); color: var(--paper); }
+  .pub-cover.c2 { background: var(--accent); color: var(--paper); }
+  .pub-cover.c3 { background: var(--paper-hot); }
+  .pub-cover.c4 { background: #1e3a5f; color: var(--paper); }
+
+  .pub-cover-waves {
+    width: 100%;
+    height: 60px;
+    align-self: flex-end;
+  }
+  .pub-cover-waves path { stroke: currentColor; stroke-width: 1.5; fill: none; opacity: 0.6; }
+
+  .pub-cover .coverno {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    opacity: 0.8;
+  }
+  .pub-cover h4 {
+    font-family: 'Fraunces', serif;
+    font-size: 26px;
+    line-height: 0.95;
+    font-weight: 400;
+    font-style: italic;
+    margin-top: auto;
+    margin-bottom: 12px;
+  }
+
+  .pub-body {
+    padding: 16px 18px 20px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 140px;
+  }
+  .pub-body .pub-type {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: 8px;
+    opacity: 0.55;
+  }
+  .pub-body .pub-author {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    margin-bottom: 16px;
+  }
+  .pub-body .pub-date {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    opacity: 0.55;
+    border-top: 1px dashed rgba(10,10,10,0.3);
+    padding-top: 10px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  /* Events */
+  .events-list { display: flex; flex-direction: column; }
+
+  /* Eventi — dark variant */
+  #eventi {
+    background: var(--ink);
+    color: var(--paper);
+    max-width: 100%;
+    padding: 100px 32px;
+  }
+  #eventi .section-header {
+    max-width: 1600px;
+    margin: 0 auto 60px;
+    border-bottom-color: var(--paper);
+  }
+  #eventi .section-number { color: var(--paper); }
+  #eventi .section-title { color: var(--paper); }
+  #eventi .events-intro,
+  #eventi .events-list {
+    max-width: 1600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  #eventi .events-intro { color: var(--paper); }
+  #eventi .event {
+    border-bottom-color: rgba(242,237,228,0.25);
+    color: var(--paper);
+  }
+  #eventi .event:first-child { border-top-color: rgba(242,237,228,0.25); }
+  #eventi .event-cta span {
+    border-bottom-color: var(--paper);
+  }
+
+  /* Statuto — full text reading layout */
+  .statuto-intro {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    line-height: 1.55;
+    font-weight: 300;
+    max-width: 64ch;
+    margin: 0 auto 48px;
+    text-align: center;
+  }
+
+  /* Compact download CTA, centered above the articles */
+  .statuto-dl {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 18px 24px;
+    background: var(--ink);
+    color: var(--paper);
+    text-decoration: none;
+    margin: 0 auto 72px;
+    max-width: 460px;
+    transition: background 0.25s, transform 0.25s, box-shadow 0.25s;
+  }
+  .statuto-dl:hover {
+    background: var(--accent);
+    transform: translate(-3px, -3px);
+    box-shadow: 6px 6px 0 var(--ink);
+  }
+  .statuto-dl-icon { flex-shrink: 0; opacity: 0.95; }
+  .statuto-dl-icon svg { display: block; }
+  .statuto-dl-body {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    flex: 1;
+    padding: 0 4px;
+    min-width: 0;
+  }
+  .statuto-dl-kind {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    opacity: 0.55;
+  }
+  .statuto-dl-title {
+    font-family: 'Fraunces', serif;
+    font-size: 20px;
+    line-height: 1.1;
+    font-weight: 400;
+    font-style: italic;
+    letter-spacing: -0.01em;
+  }
+  .statuto-dl-arrow {
+    font-family: 'Fraunces', serif;
+    font-size: 32px;
+    line-height: 1;
+    opacity: 0.8;
+    transition: transform 0.25s;
+    flex-shrink: 0;
+  }
+  .statuto-dl:hover .statuto-dl-arrow { transform: translateY(4px); }
+
+  .statuto-body {
+    max-width: 920px;
+    margin: 0 auto;
+  }
+
+  /* Each article */
+  .art {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 40px;
+    padding: 48px 0;
+    border-top: 1px solid var(--ink);
+  }
+  .art:last-child { border-bottom: 1px solid var(--ink); }
+
+  .art-num {
+    font-family: 'Fraunces', serif;
+    position: sticky;
+    top: 90px;
+    align-self: start;
+    line-height: 1;
+  }
+  .art-num .art-lbl {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    opacity: 0.5;
+    margin-bottom: 8px;
+  }
+  .art-num .art-n {
+    display: block;
+    font-size: 72px;
+    font-weight: 300;
+    font-style: italic;
+    letter-spacing: -0.03em;
+  }
+
+  .art-content { max-width: none; }
+  .art-title {
+    font-family: 'Fraunces', serif;
+    font-size: 28px;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    margin-bottom: 24px;
+  }
+  .art-title-sub {
+    font-size: 22px;
+    font-style: italic;
+    margin-top: 40px;
+    margin-bottom: 18px;
+    opacity: 0.9;
+    column-span: all;
+  }
+
+  /* Two-column flowing text body */
+  .art-body {
+    column-count: 2;
+    column-gap: 48px;
+    column-rule: 1px solid rgba(10,10,10,0.12);
+  }
+  /* Short articles (fewer words) — single column */
+  .art-body.single {
+    column-count: 1;
+    column-rule: none;
+    max-width: 68ch;
+  }
+
+  .art-content p {
+    font-family: 'Fraunces', serif;
+    font-size: 16px;
+    line-height: 1.65;
+    font-weight: 300;
+    margin-bottom: 14px;
+    color: var(--ink);
+    /* Prevent paragraphs being split across columns awkwardly */
+    break-inside: avoid;
+  }
+  .art-content p:last-child { margin-bottom: 0; }
+
+  .art-letters, .art-num-list, .art-bullets {
+    list-style: none;
+    padding: 0;
+    margin: 14px 0;
+    font-family: 'Fraunces', serif;
+    font-size: 15px;
+    line-height: 1.55;
+    font-weight: 300;
+  }
+  .art-letters li, .art-num-list li, .art-bullets li {
+    display: grid;
+    grid-template-columns: 28px 1fr;
+    gap: 6px;
+    padding: 7px 0;
+    border-bottom: 1px dashed rgba(10,10,10,0.14);
+    /* Keep each list item together */
+    break-inside: avoid;
+  }
+  .art-letters li:last-child,
+  .art-num-list li:last-child,
+  .art-bullets li:last-child { border-bottom: none; }
+
+  .art-letter {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    opacity: 0.55;
+    padding-top: 4px;
+  }
+  .art-num-list {
+    counter-reset: artnum;
+  }
+  .art-num-list li {
+    counter-increment: artnum;
+  }
+  .art-num-list li::before {
+    content: counter(artnum) ".";
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    opacity: 0.5;
+    padding-top: 4px;
+  }
+  .art-bullets li::before {
+    content: "—";
+    font-family: 'Fraunces', serif;
+    opacity: 0.45;
+    padding-top: 1px;
+  }
+
+  /* Persone — dark variant */
+  #persone {
+    background: var(--ink);
+    color: var(--paper);
+    max-width: 100%;
+    padding: 100px 32px;
+  }
+  #persone .section-header {
+    max-width: 1600px;
+    margin: 0 auto 60px;
+    border-bottom-color: var(--paper);
+  }
+  #persone .section-number { color: var(--paper); }
+  #persone .section-title { color: var(--paper); }
+  #persone .members-list {
+    max-width: 1600px;
+    margin: 0 auto;
+  }
+  #persone .members-header > div {
+    border-bottom-color: var(--paper);
+    color: var(--paper);
+  }
+  #persone .member > div {
+    border-bottom-color: rgba(242,237,228,0.2);
+    color: var(--paper);
+  }
+  #persone .member:hover > div {
+    background: rgba(242,237,228,0.06);
+  }
+  #persone .member .m-num {
+    opacity: 0.45;
+  }
+
+  .event {
+    display: grid;
+    grid-template-columns: 140px 1fr 240px 120px;
+    gap: 40px;
+    padding: 32px 0;
+    border-bottom: 1px solid var(--ink);
+    align-items: center;
+    transition: padding 0.25s;
+    cursor: pointer;
+  }
+  .event:hover {
+    padding-left: 20px;
+  }
+  .event:hover .event-title { font-style: italic; }
+  .event:first-child { border-top: 1px solid var(--ink); }
+
+  .event-date {
+    font-family: 'Fraunces', serif;
+    line-height: 0.95;
+  }
+  .event-date .day {
+    font-size: 52px;
+    font-weight: 400;
+    letter-spacing: -0.03em;
+    display: block;
+  }
+  .event-date .month {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-weight: 700;
+    margin-top: 4px;
+    display: block;
+  }
+  .event-date .year {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    opacity: 0.5;
+    letter-spacing: 0.1em;
+    margin-top: 2px;
+    display: block;
+  }
+
+  .event-body .event-type {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+    margin-bottom: 8px;
+    font-weight: 700;
+  }
+  .event-title {
+    font-family: 'Fraunces', serif;
+    font-size: 28px;
+    line-height: 1.05;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    margin-bottom: 6px;
+  }
+  .event-speakers {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    opacity: 0.7;
+  }
+  .event-speakers em { font-style: italic; }
+  .event-where {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    line-height: 1.5;
+  }
+  .event-where .place { font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; font-size: 10px; margin-bottom: 4px; }
+  .event-cta {
+    text-align: right;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-weight: 700;
+  }
+  .event-cta span {
+    display: inline-block;
+    padding-bottom: 3px;
+    border-bottom: 1px solid var(--ink);
+  }
+
+  /* Afferenze strip — red */
+  .cfp-strip {
+    background: var(--accent);
+    color: var(--paper);
+    padding: 48px 32px;
+    overflow: hidden;
+    position: relative;
+  }
+  .cfp-scroll {
+    display: flex;
+    gap: 48px;
+    white-space: nowrap;
+    animation: marquee 40s linear infinite;
+    font-family: 'Fraunces', serif;
+    font-size: 52px;
+    font-weight: 300;
+    letter-spacing: -0.02em;
+  }
+  .cfp-scroll span em { font-style: italic; }
+  .cfp-scroll .dot {
+    display: inline-flex;
+    align-items: center;
+    padding: 0 24px;
+  }
+  @keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  /* Contact */
+  #contatti {
+    background: var(--ink);
+    color: var(--paper);
+    max-width: 100%;
+    padding: 100px 32px 60px;
+  }
+  #contatti .inner {
+    max-width: 1600px;
+    margin: 0 auto;
+  }
+  #contatti .section-header { border-bottom-color: var(--paper); }
+  #contatti .section-title { color: var(--paper); }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr 1fr;
+    gap: 60px;
+    margin-bottom: 80px;
+  }
+  .contact-col h4 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    opacity: 0.55;
+    margin-bottom: 20px;
+    font-weight: 700;
+  }
+  .contact-col p, .contact-col a {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    font-weight: 300;
+    line-height: 1.45;
+    color: var(--paper);
+    text-decoration: none;
+    display: block;
+    margin-bottom: 8px;
+  }
+  .contact-col a {
+    border-bottom: 1px solid transparent;
+    display: inline-block;
+    transition: border-color 0.2s;
+  }
+  .contact-col a:hover { border-bottom-color: var(--paper); }
+
+  .newsletter-form {
+    display: flex;
+    border: 1px solid var(--paper);
+    margin-top: 20px;
+    max-width: 420px;
+  }
+  .newsletter-form input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    padding: 14px 16px;
+    color: var(--paper);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    outline: none;
+  }
+  .newsletter-form input::placeholder { color: rgba(242,237,228,0.4); }
+  .newsletter-form button {
+    background: var(--paper);
+    color: var(--ink);
+    border: none;
+    padding: 0 20px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .newsletter-form button:hover { background: var(--accent); color: var(--paper); }
+
+  /* Footer */
+  footer {
+    border-top: 1px solid rgba(242,237,228,0.2);
+    padding-top: 32px;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 40px;
+    align-items: end;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    opacity: 0.6;
+  }
+  footer .colophon { font-style: italic; text-transform: none; letter-spacing: 0; font-family: 'Fraunces', serif; font-size: 14px; font-weight: 300; opacity: 0.9; }
+
+  /* Instagram link — typographic, editorial */
+  .ig-card {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-top: 32px;
+    padding: 18px 0 18px 2px;
+    border-top: 1px solid rgba(242,237,228,0.25);
+    border-bottom: 1px solid rgba(242,237,228,0.25);
+    color: var(--paper);
+    text-decoration: none;
+    transition: padding-left 0.3s, border-color 0.3s;
+  }
+  .ig-card:hover {
+    padding-left: 10px;
+    border-color: var(--paper);
+  }
+
+  .ig-card-icon {
+    width: 44px;
+    height: 44px;
+    border: 1px solid currentColor;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: background 0.3s, color 0.3s;
+  }
+  .ig-card:hover .ig-card-icon {
+    background: var(--paper);
+    color: var(--ink);
+  }
+  .ig-card-icon svg { display: block; }
+
+  .ig-card-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    flex: 1;
+    min-width: 0;
+  }
+  .ig-card-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    opacity: 0.6;
+  }
+  .ig-card-handle {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+  }
+  .ig-card-action {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    opacity: 0.7;
+    flex-shrink: 0;
+    transition: transform 0.25s, opacity 0.25s;
+  }
+  .ig-card:hover .ig-card-action {
+    transform: translateX(6px);
+    opacity: 1;
+  }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    header.masthead { padding: 32px 28px 36px; }
+    .masthead-inner { flex-direction: column; align-items: flex-start; gap: 28px; }
+    .logo-img { height: 56px; }
+    .hero-grid { grid-template-columns: 1fr; gap: 40px; }
+    .manifesto-grid { grid-template-columns: 1fr; gap: 40px; }
+    .lines-grid { grid-template-columns: 1fr; }
+    .pubs { grid-template-columns: repeat(2, 1fr); }
+    .members-list { grid-template-columns: 40px 1fr 80px; }
+    .members-header .h-field,
+    .member .m-field { display: none; }
+    .event { grid-template-columns: 100px 1fr; gap: 20px; }
+    .event-where, .event-cta { grid-column: 2; }
+    .section-header { grid-template-columns: 1fr; gap: 12px; }
+    .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+    .statuto-dl { padding: 16px 20px; }
+    .statuto-dl-title { font-size: 17px; }
+    .statuto-dl-arrow { font-size: 26px; }
+    .art { grid-template-columns: 1fr; gap: 16px; padding: 40px 0; }
+    .art-num { position: static; }
+    .art-num .art-n { font-size: 48px; }
+    .art-title { font-size: 22px; }
+    .art-body { column-count: 1; column-rule: none; }
+    footer { grid-template-columns: 1fr; text-align: left; }
+    .cfp-scroll { font-size: 32px; }
+  }
+
+  @media (max-width: 640px) {
+    .topstrip .left span:not(.live) { display: none; }
+    .pubs { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 48px; }
+  }
+
+  /* Reveal on scroll */
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s cubic-bezier(0.2, 0.9, 0.3, 1), transform 0.8s cubic-bezier(0.2, 0.9, 0.3, 1);
+  }
+  .reveal.is-in {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+</head>
+<body>
+
+<!-- Top strip -->
+<div class="topstrip">
+  <div class="left">
+    <span class="t-univ">Università degli Studi di Sassari</span>
+    <span class="t-dept">Dipartimento di Storia, Scienze dell'Uomo e della Formazione</span>
+  </div>
+  <div class="right">
+    <a href="#" class="lang-btn active" data-lang="it">IT</a>
+    <a href="#" class="lang-btn" data-lang="en">EN</a>
+    <a href="#contatti" class="t-contact">Contatti</a>
+  </div>
+</div>
+
+<!-- Masthead -->
+<header class="masthead">
+  <div class="masthead-inner">
+    <a href="#" class="logo-link" aria-label="CRITISS — Centro di Ricerca in Teoria dell'Ideologia, del Soggetto e della Subalternità">
+      <img src="critiss-logo.png" alt="CRITISS" class="logo-img">
+    </a>
+
+    <div class="masthead-meta" style="display:none"></div>
+  </div>
+</header>
+
+<!-- Primary nav -->
+<nav class="primary">
+  <ul>
+    <li><a href="#manifesto">Manifesto</a></li>
+    <li><a href="#ricerca">Linee di ricerca</a></li>
+    <li><a href="#persone">Persone</a></li>
+    <li><a href="#statuto">Statuto</a></li>
+    <li><a href="#eventi">Seminari & Eventi</a></li>
+    <li><a href="#contatti">Contatti</a></li>
+  </ul>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-kicker">Centro di Ricerca &nbsp;/&nbsp; Università degli Studi di Sassari</div>
+  <div class="hero-grid">
+    <div>
+      <h1>
+        Storia <em>critica</em><br>
+        della filosofia,<br>
+        studi di <em>genere</em>,<br>
+        <em>postcoloniali,</em><br>
+        teorie del <em>soggetto</em>.
+      </h1>
+    </div>
+    <div>
+      <p class="hero-lede">
+        Il CRITISS è un centro di ricerca dell'Università degli Studi di Sassari dedicato alla storia critica della filosofia, agli studi postcoloniali e decoloniali, agli studi di genere e alle teorie del soggetto. Attraverso un approccio interdisciplinare e transdisciplinare, il Centro promuove ricerche innovative che contribuiscono alla comprensione critica del mondo plurale e policentrico in cui viviamo, analizzando le dinamiche di potere, le forme di soggettività e le relazioni tra teoria e prassi sociale nella contemporaneità.
+      </p>
+      <div class="hero-meta">
+        <div>
+          <span class="caps">Direzione</span>
+          <strong>Prof. Sebastiano Ghisu</strong>
+        </div>
+        <div>
+          <span class="caps">Vicedirezione</span>
+          <strong>Prof.ssa Rosanna Morace</strong>
+        </div>
+        <div>
+          <span class="caps">Sede</span>
+          <strong>Dipartimento di Storia, Scienze dell'Uomo e della Formazione — UNISS</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Wave divider inspired by logo -->
+  <svg class="wave-divider" viewBox="0 0 1600 80" preserveAspectRatio="none" style="margin-top:80px">
+    <path d="M 0,20 Q 100,0 200,20 T 400,20 T 600,20 T 800,20 T 1000,20 T 1200,20 T 1400,20 T 1600,20"/>
+    <path d="M 0,35 Q 100,15 200,35 T 400,35 T 600,35 T 800,35 T 1000,35 T 1200,35 T 1400,35 T 1600,35"/>
+    <path d="M 0,50 Q 100,30 200,50 T 400,50 T 600,50 T 800,50 T 1000,50 T 1200,50 T 1400,50 T 1600,50"/>
+    <path d="M 0,65 Q 100,45 200,65 T 400,65 T 600,65 T 800,65 T 1000,65 T 1200,65 T 1400,65 T 1600,65"/>
+  </svg>
+</section>
+
+<!-- Manifesto -->
+<section id="manifesto">
+  <div class="manifesto-inner">
+    <div class="section-header">
+      <div class="section-number">
+                <em>Chi siamo</em>
+      </div>
+      <h2 class="section-title">Studiare il <em>soggetto</em><br>e le sue <em>subalternità</em>.</h2>
+    </div>
+
+    <div class="manifesto-grid">
+      <div class="manifesto-col">
+        <span class="marker">§ Scopi</span>
+        <p class="tesi">Il CRITISS nasce dall'esigenza di approfondire la conoscenza dei processi che hanno plasmato e continuano a modellare il pensiero contemporaneo, con particolare attenzione alle relazioni tra teoria e prassi sociale.</p>
+        <p>Il Centro si propone di analizzare come le idee di soggettività si siano costituite nel corso della modernità e della contemporaneità, investigando i modi in cui i rapporti di dominio — sociale, di genere e coloniale — abbiano influenzato le elaborazioni teoriche, le concettualità e i linguaggi filosofici.</p>
+      </div>
+      <div class="manifesto-col">
+        <span class="marker">§ Prospettiva</span>
+        <p>Un obiettivo centrale del CRITISS è contribuire alla comprensione delle dinamiche planetarie in atto, che stanno delineando un mondo sempre più diversificato e non più culturalmente ed economicamente dominato dal Nord globale. In questo contesto, il Centro si impegna a studiare gli effetti prodotti dalle gerarchie territoriali — che stabiliscono centri dominanti e margini dominati — sul piano simbolico, analizzando come tali gerarchie intersechino altri rapporti di potere e si riflettano nelle filosofie, nelle ideologie e nelle culture.</p>
+        <p>Attraverso l'organizzazione di seminari, convegni, pubblicazioni scientifiche e collaborazioni nazionali e internazionali, il CRITISS mira a sviluppare approcci teorici dotati di forte valenza applicativa sul piano sociale, favorendo il dibattito scientifico e lo scambio interdisciplinare tra ricercatori e studiosi di diverse provenienze.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Linee di ricerca -->
+<section id="ricerca">
+  <div class="section-header">
+    <div class="section-number">
+              <em>Le nostre linee</em>
+    </div>
+    <h2 class="section-title">Le nostre <em>quattro</em><br>linee di ricerca.</h2>
+  </div>
+
+  <div class="lines-grid">
+    <div class="line">
+      <div class="line-top">
+        <span class="line-num">L / 01 ──</span>
+        <h3>Storia critica<br>della filosofia</h3>
+        <p>Analisi genealogica delle idee e dei concetti filosofici, investigati in relazione ai contesti storici, sociali e politici che li hanno prodotti. Una prospettiva critica che rilegge la tradizione non come una successione neutra di sistemi di pensiero, ma come un campo attraversato da rapporti di potere, esclusioni e marginalizzazioni — facendo emergere le voci storicamente silenziate.</p>
+      </div>
+      <svg class="line-wave" viewBox="0 0 300 40" preserveAspectRatio="none">
+        <path d="M 0,20 Q 30,5 60,20 T 120,20 T 180,20 T 240,20 T 300,20"/>
+        <path d="M 0,28 Q 30,13 60,28 T 120,28 T 180,28 T 240,28 T 300,28"/>
+      </svg>
+    </div>
+    <div class="line">
+      <div class="line-top">
+        <span class="line-num">L / 02 ──</span>
+        <h3>Studi<br>di genere</h3>
+        <p>Le modalità attraverso cui le identità di genere vengono costruite, rappresentate e vissute nei diversi contesti culturali e storici. Un'analisi critica delle strutture patriarcali e delle gerarchie di genere contemporanee, nell'intersezione con altre categorie di oppressione — classe, razza, etnia — per contribuire alla decostruzione degli stereotipi e a forme più eque di convivenza.</p>
+      </div>
+      <svg class="line-wave" viewBox="0 0 300 40" preserveAspectRatio="none">
+        <path d="M 0,20 Q 30,5 60,20 T 120,20 T 180,20 T 240,20 T 300,20"/>
+        <path d="M 0,28 Q 30,13 60,28 T 120,28 T 180,28 T 240,28 T 300,28"/>
+      </svg>
+    </div>
+    <div class="line">
+      <div class="line-top">
+        <span class="line-num">L / 03 ──</span>
+        <h3>Studi postcoloniali<br>e pensiero decoloniale</h3>
+        <p>Una linea fondamentale per comprendere le eredità del colonialismo e le sue continuità nelle forme contemporanee di dominio globale. Indaghiamo come le relazioni coloniali abbiano plasmato non solo strutture economiche e politiche ma anche epistemologiche e culturali. Il pensiero decoloniale, in particolare, supera l'eurocentrismo e valorizza le epistemologie del Sud globale.</p>
+      </div>
+      <svg class="line-wave" viewBox="0 0 300 40" preserveAspectRatio="none">
+        <path d="M 0,20 Q 30,5 60,20 T 120,20 T 180,20 T 240,20 T 300,20"/>
+        <path d="M 0,28 Q 30,13 60,28 T 120,28 T 180,28 T 240,28 T 300,28"/>
+      </svg>
+    </div>
+    <div class="line">
+      <div class="line-top">
+        <span class="line-num">L / 04 ──</span>
+        <h3>Teorie<br>del soggetto</h3>
+        <p>I modi in cui il concetto di soggettività è stato concepito, teorizzato e problematizzato nel pensiero moderno e contemporaneo. Esploriamo le forme — concrete e simboliche — in cui le soggettività si costituiscono rispetto ai loro contesti, dedicando particolare attenzione alle soggettività subalterne e ai processi di resistenza e <em>agency</em> che emergono in contesti di marginalizzazione.</p>
+      </div>
+      <svg class="line-wave" viewBox="0 0 300 40" preserveAspectRatio="none">
+        <path d="M 0,20 Q 30,5 60,20 T 120,20 T 180,20 T 240,20 T 300,20"/>
+        <path d="M 0,28 Q 30,13 60,28 T 120,28 T 180,28 T 240,28 T 300,28"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- Persone -->
+<section id="persone">
+  <div class="section-header">
+    <div class="section-number">
+              <em>Chi fa ricerca</em>
+    </div>
+    <h2 class="section-title">Chi <em>fa ricerca</em><br>nel Centro.</h2>
+  </div>
+
+  <div class="members-list">
+    <div class="members-header">
+      <div>#</div>
+      <div>Nome</div>
+      <div class="h-field">Linea di ricerca</div>
+      <div></div>
+    </div>
+
+    <div class="member">
+      <div class="m-num">01</div>
+      <div class="m-name">Sebastiano Ghisu <em>Direttore del Centro</em></div>
+      <div class="m-field">Direzione scientifica del Centro di ricerca</div>
+      <div class="m-arrow">→</div>
+    </div>
+    <div class="member">
+      <div class="m-num">02</div>
+      <div class="m-name">Rosanna Morace <em>Vicedirettrice del Centro</em></div>
+      <div class="m-field">Vicedirezione scientifica del Centro di ricerca</div>
+      <div class="m-arrow">→</div>
+    </div>
+    <div class="member">
+      <div class="m-num">03</div>
+      <div class="m-name">Gianpaolo Cherchi <em>Coordinatore di linea</em></div>
+      <div class="m-field">Teorie del soggetto</div>
+      <div class="m-arrow">→</div>
+    </div>
+    <div class="member">
+      <div class="m-num">04</div>
+      <div class="m-name">Stefania Monti <em>Coordinatrice di linea</em></div>
+      <div class="m-field">Storia critica della filosofia</div>
+      <div class="m-arrow">→</div>
+    </div>
+    <div class="member">
+      <div class="m-num">05</div>
+      <div class="m-name">Mirko Muzzu <em>Coordinatore di linea</em></div>
+      <div class="m-field">Studi postcoloniali e pensiero decoloniale</div>
+      <div class="m-arrow">→</div>
+    </div>
+    <div class="member">
+      <div class="m-num">06</div>
+      <div class="m-name">Cristian Perra <em>Coordinatore di linea</em></div>
+      <div class="m-field">Studi postcoloniali e pensiero decoloniale</div>
+      <div class="m-arrow">→</div>
+    </div>
+    <div class="member">
+      <div class="m-num">07</div>
+      <div class="m-name">Giorgia Maria Sanna <em>Coordinatrice di linea</em></div>
+      <div class="m-field">Studi di genere</div>
+      <div class="m-arrow">→</div>
+    </div>
+  </div>
+</section>
+
+<!-- Statuto -->
+<section id="statuto">
+  <div class="section-header">
+    <div class="section-number">
+              <em>Il nostro statuto</em>
+    </div>
+    <h2 class="section-title">Il documento <em>istitutivo</em><br>del Centro.</h2>
+  </div>
+
+  <p class="statuto-intro">Lo Statuto del CRITISS definisce le finalità, la composizione, gli organi e le modalità di funzionamento del Centro. Il documento, articolato in quattordici articoli, stabilisce la sua istituzione presso l'Università degli Studi di Sassari e ne fissa la sede amministrativa presso il Dipartimento di Storia, Scienze dell'Uomo e della Formazione.</p>
+
+  <a href="Statuto_CRITISS.pdf" class="statuto-dl" download>
+    <span class="statuto-dl-icon" aria-hidden="true">
+      <svg viewBox="0 0 48 48" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 6h18l8 8v24a4 4 0 0 1-4 4H12a4 4 0 0 1-4-4V10a4 4 0 0 1 4-4z"/>
+        <path d="M30 6v8h8"/>
+        <path d="M24 22v12"/>
+        <path d="M18 28l6 6 6-6"/>
+      </svg>
+    </span>
+    <span class="statuto-dl-body">
+      <span class="statuto-dl-kind">Documento ufficiale · PDF</span>
+      <span class="statuto-dl-title">Scarica lo Statuto</span>
+    </span>
+    <span class="statuto-dl-arrow">↓</span>
+  </a>
+
+  <div class="statuto-body">
+
+    <article class="art">
+      <div class="art-num"><span class="art-lbl">Art.</span><span class="art-n">1</span></div>
+      <div class="art-content">
+        <h3 class="art-title">Istituzione del Centro</h3>
+        <div class="art-body single">
+          <p>È istituito presso l'Università degli Studi di Sassari il centro di ricerca "Teorie dell'Ideologia, del Soggetto e della Subalternità" (CRITISS).</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="art">
+      <div class="art-num"><span class="art-lbl">Art.</span><span class="art-n">2</span></div>
+      <div class="art-content">
+        <h3 class="art-title">Finalità e funzioni</h3>
+        <div class="art-body">
+          <p>Il Centro di ricerca "Storia critica della filosofia, Studi postcoloniali e Teoria del soggetto" si propone di:</p>
+          <ol class="art-letters">
+            <li><span class="art-letter">a.</span><span>Condurre e promuovere ricerche e studi nel campo della storia delle idee, della teoria del soggetto, degli studi postcoloniali, dell'opzione decoloniale, degli studi di genere e della teoria critica della società. L'obiettivo della ricerca del Centro è affrontare, in questi campi di ricerca, questioni di rilevanza storica, filosofica, antropologica, artistica, utilizzando metodologie multidisciplinari e transdisciplinari. Si tratta di analizzare la portata e approfondire la conoscenza di tali approcci teorici fortemente connessi con le dinamiche oggi in atto a livello planetario, attraverso le quali già si delinea un mondo plurale, policentrico, diversificato e non più dominato, culturalmente oltre che economicamente, dal Nord globale, facendo così emergere la loro forte valenza applicativa sul piano sociale.</span></li>
+            <li><span class="art-letter">b.</span><span>Creare ed incrementare la conoscenza: dei modi e delle forme con cui l'idea di soggetto è stata concepita, teorizzata e concettualizzata nel pensiero moderno e contemporaneo; delle forme concrete e simboliche di costituzione delle soggettività rispetto al loro contesto storico e territoriale; di come i rapporti di dominio sociale, di genere e coloniale abbiano influenzato, nel corso della storia, le elaborazioni teoriche, le concettualità e i linguaggi filosofici.</span></li>
+            <li><span class="art-letter">c.</span><span>Incrementare in ogni sua forma lo sviluppo della ricerca sugli effetti che le gerarchie territoriali (dove si stabilisce un centro, che domina, e i suoi margini, oggetto di tale dominio) producono, intersecando altri rapporti di dominio, sul piano del simbolico (filosofie, ideologie, culture).</span></li>
+            <li><span class="art-letter">d.</span><span>Organizzare corsi, seminari, attività e corsi di aggiornamento e convegni di studio, nazionali ed internazionali, relativi ai problemi di cui ai punti a), b) e c) del presente articolo, nel rispetto delle disposizioni in vigore per l'Amministrazione universitaria.</span></li>
+            <li><span class="art-letter">e.</span><span>Promuovere il dibattito scientifico, curare la pubblicazione di articoli, testi, manuali, riviste, indici bibliografici, e offrire adeguato supporto alla didattica in materia.</span></li>
+            <li><span class="art-letter">f.</span><span>Favorire lo scambio di informazioni tra ricercatori del settore, anche nel quadro di collaborazione con altri Istituti o Dipartimenti universitari, anche se non aderenti al Centro Universitario; con organismi di ricerca nazionali e internazionali e con unità operative di ricerca costituite presso strutture di ricerca di enti pubblici e privati italiani e stranieri.</span></li>
+            <li><span class="art-letter">g.</span><span>Stimolare iniziative di collaborazione interdisciplinare e transdisciplinare.</span></li>
+            <li><span class="art-letter">h.</span><span>Collaborare in attività di ricerca e sviluppo con enti pubblici e privati, sulla base di apposite convenzioni e/o mediante iniziative di divulgazione scientifica, simposi, scuole.</span></li>
+            <li><span class="art-letter">i.</span><span>Istituire premi o borse di ricerca per il raggiungimento degli scopi del Centro, nel rispetto della normativa vigente, purché i finanziamenti siano specificamente destinati a tale scopo dal finanziatore.</span></li>
+          </ol>
+        </div>
+      </div>
+    </article>
+
+    <article class="art">
+      <div class="art-num"><span class="art-lbl">Art.</span><span class="art-n">3</span></div>
+      <div class="art-content">
+        <h3 class="art-title">Composizione del Centro</h3>
+        <div class="art-body">
+          <p>Nella prima fase aderisce chi ne ha promosso l'istituzione.</p>
+          <p>Successivamente alla costituzione, possono aderire al Centro eventuali altri docenti, ricercatrici o ricercatori interni all'Ateneo o afferenti ad altri atenei sia italiani che stranieri, che abbiano interesse per i programmi di ricerca, rivolgendo la richiesta di adesione al Consiglio del Centro. Le nuove adesioni dovranno essere approvate dal Consiglio del Centro.</p>
+          <p>Potranno collaborare alle attività del Centro borsisti di ricerca o assegnisti di Università o di enti italiani e stranieri nonché di associazioni di ricerca pubblici o privati.</p>
+        </div>
+
+        <h3 class="art-title art-title-sub">Strutture di riferimento — Sede e gestione</h3>
+        <div class="art-body single">
+          <p>La gestione amministrativa e contabile di contributi, finanziamenti, convenzioni per l'erogazione di studi e ricerche del Centro è affidata al Dipartimento di Storia, Scienze dell'Uomo e della Formazione che è anche sede del Centro stesso, secondo le disposizioni vigenti, su indicazione del Consiglio del Dipartimento, in collaborazione con il/la Direttore/trice del Centro.</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="art">
+      <div class="art-num"><span class="art-lbl">Art.</span><span class="art-n">4</span></div>
+      <div class="art-content">
+        <h3 class="art-title">Organi del Centro</h3>
+        <div class="art-body single">
+          <p>Organi del Centro sono:</p>
+          <ol class="art-num-list">
+            <li>Il/la Direttore/trice del Centro;</li>
+            <li>Il Consiglio del Centro;</li>
+            <li>Il Comitato Scientifico del Centro.</li>
+          </ol>
+        </div>
+      </div>
+    </article>
+
+    <article class="art">
+      <div class="art-num"><span class="art-lbl">Art.</span><span class="art-n">5</span></div>
+      <div class="art-content">
+        <h3 class="art-title">Norma transitoria</h3>
+        <div class="art-body single">
+          <p>È inizialmente Direttore del Centro il docente promotore, il Prof. Sebastiano Ghisu.</p>
+          <p>A seguito delle successive adesioni viene istituito il Consiglio del Centro e di seguito, il suo Comitato Scientifico.</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="art">
+      <div class="art-num"><span class="art-lbl">Art.</span><span class="art-n">6</span></div>
+      <div class="art-content">
+        <h3 class="art-title">Consiglio del Centro</h3>
+        <div class="art-body">
+          <p>Il Consiglio elegge ogni tre anni il/la Direttore/trice tra i/le docenti afferenti del Centro a maggioranza degli/lle aventi diritto. Il/la Direttore/trice è nominato/a con decreto del Rettore. Il mandato del/la Direttore/trice coincide con quello del Consiglio. Il/la Direttore/trice può essere rieletto/a consecutivamente una sola volta.</p>
+          <p>Il Consiglio ha il compito di:</p>
+          <ol class="art-num-list">
+            <li>Fissare gli indirizzi generali relativi all'attività del Centro per aree tematiche di ricerca;</li>
+            <li>Proporre l'approvazione del programma triennale, il piano annuale di attività e la relazione annuale a fine esercizio solare predisposti dal Direttore/trice;</li>
+            <li>Proporre l'approvazione di contratti e convenzioni;</li>
+            <li>Approvare le nuove adesioni di singoli/e docenti (con la maggioranza assoluta degli aventi diritto);</li>
+            <li>Deliberare su ogni argomento che coinvolga il Centro, sottoposto al suo esame dal/dalla Direttore/trice.</li>
+          </ol>
+          <p>Il Centro si organizza per le seguenti specifiche linee di ricerca, ciascuna coordinata da un/a coordinatore/trice:</p>
+          <ol class="art-num-list">
+            <li>Storia critica della filosofia;</li>
+            <li>Studi di genere;</li>
+            <li>Studi post-coloniali e pensiero decoloniale;</li>
+            <li>Teorie del soggetto.</li>
+          </ol>
+        </div>
+      </div>
+    </article>
+
+    <article class="art">
+      <div class="art-num"><span class="art-lbl">Art.</span><span class="art-n">7</span></div>
+      <div class="art-content">
+        <h3 class="art-title">Direttore / Direttrice</h3>
+        <div class="art-body">
+          <p>Il/la Direttore/trice rappresenta il Centro ed esercita tutte le funzioni che gli/le sono attribuite dai Regolamenti del Centro stesso.</p>
+          <p>Il/la Direttore/trice convoca e presiede il Consiglio curando l'esecuzione di quanto deliberato; predispone i programmi scientifici e ne coordina l'attività scientifica; sottopone inoltre al Consiglio proposte in merito ad accordi di collaborazione e ad altre iniziative da sviluppare. Convoca e presiede l'Assemblea degli afferenti una volta all'anno per illustrare le attività del Centro.</p>
+          <p>Il/la Direttore/trice nomina, tra i componenti del Consiglio, il Vicedirettore che lo sostituisce in caso di assenza o impedimento. Il/la Direttore/trice e il/la Vicedirettore/trice in ogni caso devono appartenere al personale docente di ruolo.</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="art">
+      <div class="art-num"><span class="art-lbl">Art.</span><span class="art-n">8</span></div>
+      <div class="art-content">
+        <h3 class="art-title">Comitato scientifico</h3>
+        <div class="art-body single">
+          <p>Il Comitato Scientifico è costituito da 5 docenti o ricercatori interni o esterni all'Università di Sassari.</p>
+          <p>Il Comitato Scientifico si riunisce di norma una o due volte all'anno, su convocazione del Direttore, per valutare l'attività complessiva del Centro e formulare eventuali proposte da presentare al Consiglio del Centro.</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="art">
+      <div class="art-num"><span class="art-lbl">Art.</span><span class="art-n">9</span></div>
+      <div class="art-content">
+        <h3 class="art-title">Afferenze al Centro</h3>
+        <div class="art-body">
+          <p>Come componenti del Centro possono presentare domanda (corredata di curriculum vitae) al Consiglio del Centro:</p>
+          <ul class="art-bullets">
+            <li>Docenti, afferenti ai Dipartimenti dell'Università degli Studi di Sassari, i/le quali si riconoscano nelle finalità e nel programma di ricerca del Centro;</li>
+            <li>Docenti di altre università, sia italiane che straniere, che si riconoscano nella finalità e nel programma del Centro;</li>
+            <li>Studiosi/e di tematiche di interesse del Centro, che manifestino interesse per le finalità e il programma di ricerca del Centro, su indicazione del Comitato Scientifico.</li>
+          </ul>
+          <p>Allo svolgimento dei programmi di ricerca e delle altre attività realizzate presso il Centro possono collaborare docenti a contratto, borsisti, assegnisti di ricerca e dottorandi di ricerca.</p>
+          <p>Il Centro, inoltre, è aperto ai laureandi di primo e secondo livello interessati alle tematiche caratterizzanti il Centro.</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="art">
+      <div class="art-num"><span class="art-lbl">Art.</span><span class="art-n">10</span></div>
+      <div class="art-content">
+        <h3 class="art-title">Finanziamenti</h3>
+        <div class="art-body">
+          <p>Le risorse finanziarie del Centro sono rappresentate da:</p>
+          <ul class="art-bullets">
+            <li>Fondi erogati dal MIUR e da altri Ministeri ed enti nazionali;</li>
+            <li>Finanziamenti concessi dalla Comunità europea e da altri organismi internazionali;</li>
+            <li>Altre risorse disciplinate da appositi contratti o convenzioni.</li>
+          </ul>
+          <p>Ulteriori contributi, corrisposti da Enti pubblici o privati, consentiranno al Centro di potenziare l'attività di ricerca, oggetto delle sue finalità, nel rispetto della normativa vigente.</p>
+          <p>Il Centro è costituito senza oneri finanziari per i Dipartimenti e per l'Università degli Studi di Sassari.</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="art">
+      <div class="art-num"><span class="art-lbl">Art.</span><span class="art-n">11</span></div>
+      <div class="art-content">
+        <h3 class="art-title">Collaborazioni con soggetti esterni</h3>
+        <div class="art-body single">
+          <p>Le attività di cui all'art. 2 potranno essere svolte nel rispetto delle disposizioni in vigore per l'Amministrazione universitaria. I finanziamenti esterni saranno utilizzati per coprire le spese relative alle attività del Centro. Potranno essere assunte, d'intesa con le strutture dell'Ateneo, attività di ricerca, di consulenza, di formazione e di collaborazione scientifica.</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="art">
+      <div class="art-num"><span class="art-lbl">Art.</span><span class="art-n">12</span></div>
+      <div class="art-content">
+        <h3 class="art-title">Modifiche del regolamento</h3>
+        <div class="art-body single">
+          <p>Le proposte di modifica del Regolamento del Centro sono presentate dal/dalla Direttore/trice, per l'approvazione del Consiglio del Centro e sentito il Comitato Scientifico.</p>
+          <p>Le proposte di modifica del Regolamento sono approvate se ricevono il voto favorevole della maggioranza assoluta dei/lle componenti del Consiglio.</p>
+          <p>Esse dovranno essere infine ratificate dal Senato Accademico dell'Università degli Studi di Sassari.</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="art">
+      <div class="art-num"><span class="art-lbl">Art.</span><span class="art-n">13</span></div>
+      <div class="art-content">
+        <h3 class="art-title">Scioglimento</h3>
+        <div class="art-body single">
+          <p>Il Centro potrà essere sciolto, con delibera del Consiglio di Amministrazione, qualora venissero meno le ragioni che hanno portato alla sua costituzione.</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="art">
+      <div class="art-num"><span class="art-lbl">Art.</span><span class="art-n">14</span></div>
+      <div class="art-content">
+        <h3 class="art-title">Norme finali</h3>
+        <div class="art-body single">
+          <p>Per quanto non previsto dal presente Regolamento, valgono le disposizioni contenute nello Statuto e nei Regolamenti dell'Ateneo.</p>
+        </div>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<!-- Attività -->
+<section id="eventi">
+  <div class="section-header">
+    <div class="section-number">
+              <em>Le nostre attività</em>
+    </div>
+    <h2 class="section-title">Seminari, <em>convegni,</em><br>scambi internazionali.</h2>
+  </div>
+
+  <p class="events-intro" style="margin-bottom: 56px;">Il CRITISS organizza corsi, seminari, convegni nazionali e internazionali sui temi delle sue linee di ricerca. Promuove lo scambio tra ricercatori, la collaborazione con istituti e dipartimenti universitari, e la cooperazione con enti di ricerca pubblici e privati in Italia e all'estero.</p>
+
+  <div class="events-list">
+    <div class="event">
+      <div class="event-date">
+        <span class="day">07</span>
+        <span class="month">Maggio</span>
+        <span class="year">— prossimo</span>
+      </div>
+      <div class="event-body">
+        <div class="event-type">Evento inaugurale · Aperto al pubblico</div>
+        <div class="event-title">Presentazione del Centro di ricerca</div>
+        <div class="event-speakers">Incontro di presentazione del <em>CRITISS</em> — scopi, linee di ricerca, attività future</div>
+      </div>
+      <div class="event-where">
+        <div class="place">→ Sassari</div>
+        Dipartimento di Storia,<br>
+        Scienze dell'Uomo e della Formazione
+      </div>
+      <div class="event-cta"><span>In programma ↗</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- Afferenze -->
+<div class="cfp-strip" id="afferenze">
+  <div class="cfp-scroll">
+    <span>Afferenze aperte <em>·</em> <em>docenti</em>, ricercatrici, ricercatori</span>
+    <span class="dot">◆</span>
+    <span>Domanda al <em>Consiglio del Centro</em></span>
+    <span class="dot">◆</span>
+    <span>Con <em>curriculum vitae</em></span>
+    <span class="dot">◆</span>
+    <span>Aperto anche a <em>dottorandi e laureandi</em></span>
+    <span class="dot">◆</span>
+    <span>Afferenze aperte <em>·</em> <em>docenti</em>, ricercatrici, ricercatori</span>
+    <span class="dot">◆</span>
+    <span>Domanda al <em>Consiglio del Centro</em></span>
+    <span class="dot">◆</span>
+    <span>Con <em>curriculum vitae</em></span>
+    <span class="dot">◆</span>
+    <span>Aperto anche a <em>dottorandi e laureandi</em></span>
+    <span class="dot">◆</span>
+  </div>
+</div>
+
+<!-- Contatti -->
+<section id="contatti">
+  <div class="inner">
+    <div class="section-header">
+      <div class="section-number" style="color:var(--paper)">
+                <em>Scrivici</em>
+      </div>
+      <h2 class="section-title">Scrivici, <em>lavora</em> con noi,<br>resta in ascolto.</h2>
+    </div>
+
+    <div class="contact-grid">
+      <div class="contact-col">
+        <h4>— Sede</h4>
+        <p>
+          Dipartimento di Storia,<br>
+          Scienze dell'Uomo<br>
+          e della Formazione<br>
+          Via Maurizio Zanfarino 62<br>
+          07100 Sassari · Italia
+        </p>
+        <a href="https://www.dissuf.uniss.it/it" target="_blank" rel="noopener" style="margin-top:12px;font-size:16px;">www.dissuf.uniss.it ↗</a>
+      </div>
+      <div class="contact-col">
+        <h4>— Scrivici</h4>
+        <p style="font-size:15px;opacity:0.7;margin-bottom:16px;">Per afferenze al Centro, proposte di collaborazione, informazioni sui programmi di ricerca:</p>
+        <a href="mailto:">Indirizzo email in pubblicazione</a>
+      </div>
+      <div class="contact-col">
+        <h4>— Resta in ascolto</h4>
+        <p style="font-size:15px;opacity:0.75;margin-bottom:12px">Riceverai aggiornamenti sui seminari, i convegni e le pubblicazioni del Centro.</p>
+        <form class="newsletter-form" onsubmit="event.preventDefault(); this.querySelector('input').value=''; this.querySelector('button').textContent='✓ Iscritto';">
+          <input type="email" placeholder="la.tua@email.it" required>
+          <button type="submit">Iscriviti →</button>
+        </form>
+        <a href="https://www.instagram.com/critiss_uniss/" target="_blank" rel="noopener" class="ig-card" aria-label="Seguici su Instagram">
+          <span class="ig-card-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="18" height="18" rx="5"/>
+              <circle cx="12" cy="12" r="4"/>
+              <circle cx="17.5" cy="6.5" r="0.9" fill="currentColor" stroke="none"/>
+            </svg>
+          </span>
+          <span class="ig-card-content">
+            <span class="ig-card-label">Instagram</span>
+            <span class="ig-card-handle">@critiss_uniss</span>
+          </span>
+          <span class="ig-card-action">Seguici →</span>
+        </a>
+      </div>
+    </div>
+
+    <footer>
+      <div>© CRITISS · Università di Sassari</div>
+      <div class="colophon">
+        Centro di Ricerca istituito presso il <em>Dipartimento di Storia, Scienze dell'Uomo e della Formazione</em>. Direzione: Prof. Sebastiano Ghisu · Vicedirezione: Prof.ssa Rosanna Morace.
+      </div>
+      <div>
+        Sassari · Italia
+      </div>
+    </footer>
+  </div>
+</section>
+
+<script>
+  // Reveal on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('is-in');
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -80px 0px' });
+
+  document.querySelectorAll('section > .section-header, .manifesto-col, .line, .pub, .event, .contact-col').forEach(el => {
+    el.classList.add('reveal');
+    observer.observe(el);
+  });
+
+  // ── i18n IT / EN ────────────────────────────────────────
+  const translations = {
+    en: {
+      // Top strip
+      '.t-univ': 'University of Sassari',
+      '.t-dept': 'Department of History, Human Sciences and Education',
+      '.t-contact': 'Contact',
+
+      // Masthead meta
+      '.masthead-meta': ['Sassari', '—', 'History, Human Sciences and Education'],
+
+      // Nav
+      'nav.primary li:nth-child(1) a': 'Manifesto',
+      'nav.primary li:nth-child(2) a': 'Research lines',
+      'nav.primary li:nth-child(3) a': 'People',
+      'nav.primary li:nth-child(4) a': 'Statute',
+      'nav.primary li:nth-child(5) a': 'Seminars & Events',
+      'nav.primary li:nth-child(6) a': 'Contact',
+
+      // Hero
+      '.hero-kicker': 'Research Centre  /  University of Sassari',
+      '.hero h1': '<em>Critical</em> history<br>of philosophy,<br><em>gender</em> studies,<br><em>postcolonial,</em><br>theories of the <em>subject</em>.',
+      '.hero-lede': 'CRITISS is a research centre of the University of Sassari dedicated to the critical history of philosophy, postcolonial and decolonial studies, gender studies and theories of the subject. Through an interdisciplinary and transdisciplinary approach, the Centre promotes innovative research that contributes to a critical understanding of the plural and polycentric world we live in, analysing the dynamics of power, the forms of subjectivity and the relations between theory and social practice in the contemporary age.',
+      '.hero-meta div:nth-child(1) .caps': 'Director',
+      '.hero-meta div:nth-child(2) .caps': 'Deputy Director',
+      '.hero-meta div:nth-child(3) .caps': 'Seat',
+      '.hero-meta div:nth-child(3) strong': "Department of History, Human Sciences and Education — UNISS",
+
+      // Manifesto
+      '#manifesto .section-number': '<em>About us</em>',
+      '#manifesto .section-title': 'Studying the <em>subject</em><br>and its <em>subalternities</em>.',
+      '#manifesto .manifesto-col:nth-child(1) .marker': '§ Aims',
+      '#manifesto .manifesto-col:nth-child(1) p.tesi': "CRITISS arises from the need to deepen our understanding of the processes that have shaped and continue to shape contemporary thought, with particular attention to the relations between theory and social practice.",
+      '#manifesto .manifesto-col:nth-child(1) p:not(.tesi)': "The Centre aims to analyse how ideas of subjectivity have been constituted throughout modernity and the contemporary era, investigating the ways in which relations of domination — social, gendered and colonial — have influenced theoretical elaborations, conceptualities and philosophical languages.",
+      '#manifesto .manifesto-col:nth-child(2) .marker': '§ Perspective',
+      '#manifesto .manifesto-col:nth-child(2) p:nth-of-type(1)': "A central objective of CRITISS is to contribute to understanding the planetary dynamics now unfolding, which are shaping a world increasingly diversified and no longer culturally and economically dominated by the global North. The Centre studies the effects produced by territorial hierarchies — which establish dominant centres and dominated margins — on the symbolic plane, analysing how such hierarchies intersect with other power relations and are reflected in philosophies, ideologies and cultures.",
+      '#manifesto .manifesto-col:nth-child(2) p:nth-of-type(2)': "Through the organisation of seminars, conferences, scientific publications and national and international collaborations, CRITISS aims to develop theoretical approaches with strong applicative value on the social plane, fostering scientific debate and interdisciplinary exchange among researchers and scholars from diverse backgrounds.",
+
+      // Research lines section header
+      '#ricerca .section-number': '<em>Our lines</em>',
+      '#ricerca .section-title': 'Our <em>four</em><br>research lines.',
+
+      // Each line
+      '#ricerca .line:nth-child(1) h3': 'Critical history<br>of philosophy',
+      '#ricerca .line:nth-child(1) p': "A genealogical analysis of philosophical ideas and concepts, investigated in relation to the historical, social and political contexts that produced them. A critical perspective that rereads tradition not as a neutral succession of thought systems, but as a field traversed by relations of power, exclusions and marginalisations — bringing to light voices historically silenced.",
+      '#ricerca .line:nth-child(2) h3': 'Gender<br>studies',
+      '#ricerca .line:nth-child(2) p': "The ways in which gender identities are constructed, represented and lived in different cultural and historical contexts. A critical analysis of patriarchal structures and contemporary gender hierarchies, intersecting with other categories of oppression — class, race, ethnicity — to contribute to dismantling stereotypes and to fairer forms of coexistence.",
+      '#ricerca .line:nth-child(3) h3': 'Postcolonial studies<br>and decolonial thought',
+      '#ricerca .line:nth-child(3) p': "A fundamental line for understanding the legacies of colonialism and their continuities in contemporary forms of global domination. We investigate how colonial relations have shaped not only economic and political structures but also epistemological and cultural ones. Decolonial thought, in particular, moves beyond Eurocentrism and values the epistemologies of the global South.",
+      '#ricerca .line:nth-child(4) h3': 'Theories<br>of the subject',
+      '#ricerca .line:nth-child(4) p': "The ways in which the concept of subjectivity has been conceived, theorised and problematised in modern and contemporary thought. We explore the forms — concrete and symbolic — in which subjectivities are constituted in relation to their contexts, with particular attention to subaltern subjectivities and the processes of resistance and <em>agency</em> that emerge in contexts of marginalisation.",
+
+      // People section
+      '#persone .section-number': '<em>Our researchers</em>',
+      '#persone .section-title': "Who <em>does research</em><br>at the Centre.",
+      '#persone .members-header > div:nth-child(2)': 'Name',
+      '#persone .members-header .h-role': 'Role',
+      '#persone .members-header .h-field': 'Research line',
+
+      // Statute section
+      '#statuto .section-number': '<em>Our statute</em>',
+      '#statuto .section-title': "The Centre's <em>founding</em><br>document.",
+      '.statuto-intro p': "The Statute of CRITISS sets out the aims, composition, bodies and mode of operation of the Centre. The document, articulated in fourteen articles, establishes its institution at the University of Sassari and fixes its administrative seat at the Department of History, Human Sciences and Education.",
+      '.statuto-toc-label': 'Table of articles',
+      '.statuto-toc-count': '14 articles',
+      '.statuto-dl-kind': 'PDF · Official document',
+      '.statuto-dl-title': 'Download the full Statute',
+
+      // Events section
+      '#eventi .section-number': '<em>Our activities</em>',
+      '#eventi .section-title': 'Seminars, <em>conferences,</em><br>international exchanges.',
+      '#eventi > .events-intro': "CRITISS organises courses, seminars, national and international conferences on the themes of its research lines. It fosters exchange among researchers, collaboration with university institutes and departments, and cooperation with public and private research bodies in Italy and abroad.",
+      '#eventi .event .event-type': 'Inaugural event · Open to the public',
+      '#eventi .event .event-title': 'Presentation of the Research Centre',
+      '#eventi .event .event-speakers': "Inaugural meeting of <em>CRITISS</em> — aims, research lines, upcoming activities",
+      '#eventi .event .event-date .month': 'May',
+      '#eventi .event .event-date .year': '— upcoming',
+      '#eventi .event .event-where .place': '→ Sassari',
+      '#eventi .event-cta span': 'Upcoming ↗',
+
+      // Afferenze marquee — just keep italian for aesthetic continuity
+      // Contact section
+      '#contatti .section-number': '<em>Write to us</em>',
+      '#contatti .section-title': 'Write to us, <em>work</em> with us,<br>stay tuned.',
+      '#contatti .contact-col:nth-child(1) h4': '— Seat',
+      '#contatti .contact-col:nth-child(2) h4': '— Write to us',
+      '#contatti .contact-col:nth-child(2) p': "For applications to join the Centre, collaboration proposals, and information about research programmes:",
+      '#contatti .contact-col:nth-child(2) a': 'Email address coming soon',
+      '#contatti .contact-col:nth-child(3) h4': '— Stay tuned',
+      '#contatti .contact-col:nth-child(3) > p': "Receive updates on seminars, conferences and publications from the Centre.",
+      '#contatti .newsletter-form input': { placeholder: 'your@email.com' },
+      '#contatti .newsletter-form button': 'Subscribe →',
+      'footer .colophon': 'Research Centre established at the <em>Department of History, Human Sciences and Education</em>. Director: Prof. Sebastiano Ghisu · Deputy Director: Prof.ssa Rosanna Morace.',
+    }
+  };
+
+  // Save original IT values on first load
+  function snapshotIT() {
+    Object.keys(translations.en).forEach(sel => {
+      const val = translations.en[sel];
+      document.querySelectorAll(sel).forEach(el => {
+        if (!el.dataset.itSaved) {
+          if (typeof val === 'object' && !Array.isArray(val)) {
+            // placeholder etc
+            el.dataset.itPlaceholder = el.getAttribute('placeholder') || '';
+          } else if (Array.isArray(val)) {
+            // multiple text nodes — save innerHTML
+            el.dataset.itHtml = el.innerHTML;
+          } else {
+            el.dataset.itHtml = el.innerHTML;
+          }
+          el.dataset.itSaved = '1';
+        }
+      });
+    });
+  }
+
+  function applyLang(lang) {
+    const dict = lang === 'en' ? translations.en : null;
+    Object.keys(translations.en).forEach(sel => {
+      document.querySelectorAll(sel).forEach(el => {
+        const enVal = translations.en[sel];
+        if (lang === 'it') {
+          if (el.dataset.itHtml !== undefined) el.innerHTML = el.dataset.itHtml;
+          if (el.dataset.itPlaceholder !== undefined) el.setAttribute('placeholder', el.dataset.itPlaceholder);
+        } else {
+          if (Array.isArray(enVal)) {
+            // For masthead-meta: preserve child structure
+            if (sel === '.masthead-meta') {
+              el.innerHTML = `<span>${enVal[0]}</span><span class="sep">${enVal[1]}</span><span>${enVal[2]}</span>`;
+            }
+          } else if (typeof enVal === 'object') {
+            if (enVal.placeholder) el.setAttribute('placeholder', enVal.placeholder);
+          } else {
+            el.innerHTML = enVal;
+          }
+        }
+      });
+    });
+    document.documentElement.lang = lang;
+    document.querySelectorAll('.lang-btn').forEach(b => {
+      b.classList.toggle('active', b.dataset.lang === lang);
+    });
+  }
+
+  // Init
+  snapshotIT();
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      applyLang(btn.dataset.lang);
+    });
+  });
+</script>
+
+</body>
+</html>
